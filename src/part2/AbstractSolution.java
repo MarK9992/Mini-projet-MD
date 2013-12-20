@@ -9,13 +9,15 @@ public abstract class AbstractSolution extends Frame {
     protected static final int HEIGHT = 600;
     protected int depth; // recursion depth
     protected int initialLength;
+    protected SolutionType type;
 
-    public AbstractSolution(int depth, int length) {
+    public AbstractSolution(int depth, int length, SolutionType type) {
         this.setSize(WIDTH, HEIGHT);
         this.setVisible(true);
         this.setBackground(Color.white);
         this.depth = depth;
         initialLength = length;
+        this.type = type;
         addWindowListener(new WindowHandler()); // to close
         setTitle("Dessins recursifs au niveau : " + depth);
     }
@@ -33,20 +35,37 @@ public abstract class AbstractSolution extends Frame {
 
         int frameHeight = getSize().height; // frame dimensions with borders
         int frameWidth = getSize().width;
-        g2d.setColor(Color.black); // the color we are going to draw with
+        g2d.setColor(Color.magenta); // the color we are going to draw with
 
         // g2d.translate(frameWidth/2,frameHeight/2); //to move the origin if
         // necessary
 
         // drawSolutionk call
-        drawSolutionk(g2d, 1, getInsets().top + 1, initialLength,
-                depth);
+        //try {
+            switch (type) {
+            case FkSolution:
+                drawSolutionk(g2d, 1, getInsets().top + 1/*
+                                                          * , initialLength,
+                                                          * depth
+                                                          */);
+                break;
+            default:
+                System.err
+                        .println("unknown SolutionType\nAbstractSolution.paint()");
+            }
+        /*} catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }*/
     }
 
     /**
-     * drawSolutionk: Produces a recursive drawing Parameters: Graphics
-     * drawingArea: The graphic object in which we draw int ... arg : the
-     * coordinates, length and others if necessary, and recursion depth
+     * drawSolutionk: Produces a recursive drawing.
+     * 
+     * @param drawingArea
+     *            the graphic object in which we draw
+     * @param arg
+     *            the coordinates, length and others if necessary, and recursion
+     *            depth
      */
     public abstract void drawSolutionk(Graphics drawingArea, int... arg);
 }
