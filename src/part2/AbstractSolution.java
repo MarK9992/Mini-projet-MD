@@ -5,11 +5,28 @@ import java.awt.event.WindowAdapter; // to close
 import java.awt.event.WindowEvent; // to close
 
 public abstract class AbstractSolution extends Frame {
+    // TODO deal with the serializing problems
+    
+    // Fields
+    
     protected static final int WIDTH = 600; // initial frame dimensions
     protected static final int HEIGHT = 600;
     protected int depth; // recursion depth
     protected int initialLength;
     protected SolutionType type;
+    
+    // Constructors
+    
+    public AbstractSolution() {
+        this.setSize(WIDTH, HEIGHT);
+        this.setVisible(true);
+        this.setBackground(Color.white);
+        this.depth = 0;
+        initialLength = 0;
+        this.type = SolutionType.FkSolution;
+        addWindowListener(new WindowHandler()); // to close
+        setTitle("Dessins recursifs au niveau : " + depth);
+    }
 
     public AbstractSolution(int depth, int length, SolutionType type) {
         this.setSize(WIDTH, HEIGHT);
@@ -41,21 +58,14 @@ public abstract class AbstractSolution extends Frame {
         // necessary
 
         // drawSolutionk call
-        //try {
-            switch (type) {
-            case FkSolution:
-                drawSolutionk(g2d, 1, getInsets().top + 1/*
-                                                          * , initialLength,
-                                                          * depth
-                                                          */);
-                break;
-            default:
-                System.err
-                        .println("unknown SolutionType\nAbstractSolution.paint()");
-            }
-        /*} catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }*/
+        switch (type) {
+        case FkSolution:
+            drawSolutionk(g2d, 1, getInsets().top + 1, initialLength, depth);
+            break;
+        default:
+            System.err
+                    .println("unknown SolutionType\nAbstractSolution.paint()");
+        }
     }
 
     /**

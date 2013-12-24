@@ -3,7 +3,10 @@ package part2;
 import java.awt.Graphics;
 
 /**
- * Window which draws a recursive drawing of circles.
+ * Window which draws a recursive drawing of circles. The first circle is drawn
+ * at the top left corner and at each recursion, two half previous diameter
+ * circles are drawn east and south of each circle drawn at the previous
+ * recursion.
  * 
  * @author Marc Karassev
  * 
@@ -44,7 +47,7 @@ public class FkSolution extends AbstractSolution {
         super(depth, diameter, SolutionType.FkSolution);
     }
 
-    // Méthodes
+    // Methods
 
     /**
      * Produces a recursive drawing of circles.
@@ -74,14 +77,6 @@ public class FkSolution extends AbstractSolution {
             drawSolutionk(drawingArea, args[0] + args[2] / 4,
                     args[1] + args[2], args[2] / 2, args[3] - 1);
         }
-    }
-
-    /**
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-        FkSolution fks = new FkSolution(5, 200);
     }
 
 }

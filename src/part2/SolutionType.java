@@ -1,5 +1,11 @@
 package part2;
 
+/**
+ * Enum of SolutionTypes : FkSolution, F2kSolution
+ * 
+ * @author Marc Karassev
+ * 
+ */
 public enum SolutionType {
-    FkSolution;
+    FkSolution, F2kSolution;
 }
