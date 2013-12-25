@@ -55,28 +55,27 @@ public class FkSolution extends AbstractSolution {
      * @param drawingArea
      *            the graphic object to draw into
      * @param args
-     *            [0] the x coordinate of the upper left corner of the first
-     *            circle to be drawn
+     *            [0] the x coordinate of the upper left corner of the circle to
+     *            draw
      * @param args
-     *            [1] the y coordinate of the upper left corner of the first
-     *            circle to be drawn
+     *            [1] the y coordinate of the upper left corner of the circle to
+     *            draw
      * @param args
-     *            [2] the width of the first circle to be drawn
+     *            [2] the width of the circle to draw
      * @param args
-     *            [3] depth of recursion
+     *            [3] the recursions remaining to do.
      */
     @Override
     public void drawSolutionk(Graphics drawingArea, int... args) {
         if (args.length != 4)
             throw new IllegalArgumentException(
                     "number of parameters different of 4");
-        drawingArea.fillOval(args[0], args[1], args[2], args[2]);
         if (args[3] != 0) {
+            drawingArea.fillOval(args[0], args[1], args[2], args[2]);
             drawSolutionk(drawingArea, args[0] + args[2],
                     args[1] + args[2] / 4, args[2] / 2, args[3] - 1);
             drawSolutionk(drawingArea, args[0] + args[2] / 4,
                     args[1] + args[2], args[2] / 2, args[3] - 1);
         }
     }
-
 }

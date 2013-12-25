@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Test {
 
     /**
-     * Test \eventual static problems, try to run different instances and see if
+     * Test potential static problems, try to run different instances and see if
      * you can modify them all with on input.
      */
     private static AbstractSolution s;
@@ -60,7 +60,7 @@ public class Test {
         } catch (NullPointerException e) {
             System.err
                     .println("Invalid use of Test.createSolution, solution or depth or both is/are unselected.");
-            e.printStackTrace(); //TODO In which stream it writes ? err ?
+            e.printStackTrace();
         }
     }
 

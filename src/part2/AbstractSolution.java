@@ -6,17 +6,19 @@ import java.awt.event.WindowEvent; // to close
 
 public abstract class AbstractSolution extends Frame {
     // TODO deal with the serializing problems
-    
+    // TODO final parameters of functions
+    // TODO private fields
+
     // Fields
-    
+
     protected static final int WIDTH = 600; // initial frame dimensions
     protected static final int HEIGHT = 600;
     protected int depth; // recursion depth
     protected int initialLength;
     protected SolutionType type;
-    
+
     // Constructors
-    
+
     public AbstractSolution() {
         this.setSize(WIDTH, HEIGHT);
         this.setVisible(true);
@@ -45,6 +47,7 @@ public abstract class AbstractSolution extends Frame {
         }
     }
 
+    // TODO repaint ? listener on resize
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -52,7 +55,6 @@ public abstract class AbstractSolution extends Frame {
 
         int frameHeight = getSize().height; // frame dimensions with borders
         int frameWidth = getSize().width;
-        g2d.setColor(Color.magenta); // the color we are going to draw with
 
         // g2d.translate(frameWidth/2,frameHeight/2); //to move the origin if
         // necessary
@@ -60,22 +62,37 @@ public abstract class AbstractSolution extends Frame {
         // drawSolutionk call
         switch (type) {
         case FkSolution:
+            g2d.setColor(Color.magenta);
             drawSolutionk(g2d, 1, getInsets().top + 1, initialLength, depth);
+            break;
+        case F2kSolution:
+            g2d.setColor(Color.black);
+            drawSolutionk(g2d, frameWidth / 2 - initialLength / 2, frameHeight
+                    / 2 - initialLength / 2, initialLength, depth,
+                    Position.CENTER.getValue());
             break;
         default:
             System.err
-                    .println("unknown SolutionType\nAbstractSolution.paint()");
+                    .println("unknown SolutionType\tAbstractSolution.paint()");
         }
     }
 
     /**
-     * drawSolutionk: Produces a recursive drawing.
+     * Produces a recursive drawing.
      * 
      * @param drawingArea
      *            the graphic object in which we draw
-     * @param arg
+     * @param args
      *            the coordinates, length and others if necessary, and recursion
      *            depth
      */
-    public abstract void drawSolutionk(Graphics drawingArea, int... arg);
+    public abstract void drawSolutionk(Graphics drawingArea, int... args);
+
+    /**
+     * Returns a string representation of this solution and its values.
+     */
+    public String toString() {
+        return type + " " + depth + " " + initialLength + " "
+                + super.toString();
+    }
 }
