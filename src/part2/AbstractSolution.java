@@ -8,6 +8,7 @@ public abstract class AbstractSolution extends Frame {
     // TODO deal with the serializing problems
     // TODO final parameters of functions
     // TODO private fields
+    // TODO java documentation comments
 
     // Fields
 
@@ -49,32 +50,110 @@ public abstract class AbstractSolution extends Frame {
 
     // TODO repaint ? listener on resize
     public void paint(Graphics g) {
+        int frameHeight = getSize().height;
+        int frameWidth = getSize().width;
+        
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-
-        int frameHeight = getSize().height; // frame dimensions with borders
-        int frameWidth = getSize().width;
-
-        // g2d.translate(frameWidth/2,frameHeight/2); //to move the origin if
-        // necessary
-
-        // drawSolutionk call
+        g2d.clearRect(0, 0, frameWidth, frameHeight);
         switch (type) {
         case FkSolution:
-            g2d.setColor(Color.magenta);
-            drawSolutionk(g2d, 1, getInsets().top + 1, initialLength, depth);
+            drawSolution1(g2d);
             break;
         case F2kSolution:
+            drawSolution2(g2d, frameWidth, frameHeight);
+            break;
+        case F3kSolution:
+            drawSolution3(g2d, frameWidth, frameHeight);
+            break;
+        case F4kSolution:
+            drawSolution4(g2d, frameWidth, frameHeight);
+            break;
+        default:
+            System.err
+                    .println("unknown SolutionType\tpart2.AbstractSolution.paint()");
+        }
+    }
+
+    /**
+     * drawSolutionk call for FkSolution instances.
+     * 
+     * @param g2d
+     *            the graphic object to draw into
+     */
+    private void drawSolution1(Graphics2D g2d) {
+        if (type == SolutionType.FkSolution) {
+            g2d.setColor(Color.magenta);
+            drawSolutionk(g2d, 1, getInsets().top + 1, initialLength, depth);
+        } else
+            System.err
+                    .println("Invalid use of part2.AbstractSolution.drawSolution1(), SolutionType different of FkSolution.");
+    }
+
+    /**
+     * drawSolutionk call for F2kSolution instances.
+     * 
+     * @param g2d
+     *            the graphic object to draw into
+     * @param frameWidth
+     *            the width of the frame
+     * @param frameHeight
+     *            the height of the frame
+     */
+    private void drawSolution2(Graphics2D g2d, int frameWidth, int frameHeight) {
+        if (type == SolutionType.F2kSolution) {
+            g2d.setColor(Color.green);
+            drawSolutionk(g2d, frameWidth / 2 - initialLength / 2, frameHeight
+                    / 2 - initialLength / 2, initialLength, depth,
+                    Position.CENTER.getValue());
+        } else
+            System.err
+                    .println("Invalid use of part2.AbstractSolution.drawSolution2(), SolutionType different of F2kSolution.");
+    }
+
+    /**
+     * drawSolutionk call for F3kSolution instances.
+     * 
+     * @param g2d
+     *            the graphic object to draw into
+     * @param frameWidth
+     *            the width of the frame
+     * @param frameHeight
+     *            the height of the frame
+     */
+    private void drawSolution3(Graphics2D g2d, int frameWidth, int frameHeight) {
+        if (type == SolutionType.F3kSolution) {
             g2d.setColor(Color.black);
             drawSolutionk(g2d, frameWidth / 2 - initialLength / 2, frameHeight
                     / 2 - initialLength / 2, initialLength, depth,
                     Position.CENTER.getValue());
-            break;
-        default:
+        } else
             System.err
-                    .println("unknown SolutionType\tAbstractSolution.paint()");
-        }
+                    .println("Invalid use of part2.AbstractSolution.drawSolution3(), SolutionType different of F3kSolution.");
+    }
+
+    /**
+     * drawSolutionk call for F4kSolution instances.
+     * 
+     * @param g2d
+     *            the graphic object to draw into
+     * @param frameWidth
+     *            the width of the frame
+     * @param frameHeight
+     *            the height of the frame
+     */
+    private void drawSolution4(Graphics2D g2d, int frameWidth, int frameHeight) {
+        if (type == SolutionType.F4kSolution) {
+            g2d.setColor(Color.black);
+            g2d.fillRect(0, 0, frameWidth, frameHeight);
+            g2d.setColor(Color.white);
+            g2d.translate(frameWidth / 2, frameHeight / 2);
+            drawSolutionk(g2d, -initialLength / 2, -initialLength / 2,
+                    initialLength, depth, 1);
+        } else
+            System.err
+                    .println("Invalid use of part2.AbstractSolution.drawSolution4(), SolutionType different of F4kSolution.");
     }
 
     /**
@@ -86,7 +165,7 @@ public abstract class AbstractSolution extends Frame {
      *            the coordinates, length and others if necessary, and recursion
      *            depth
      */
-    public abstract void drawSolutionk(Graphics drawingArea, int... args);
+    public abstract void drawSolutionk(Graphics2D drawingArea, int... args);
 
     /**
      * Returns a string representation of this solution and its values.

@@ -1,0 +1,234 @@
+package part2;
+
+import java.awt.Graphics2D;
+
+/**
+ * Window which draws a recursive drawing of squares. The first square is drawn
+ * at the center of the window and at each recursion, half previous side squares
+ * are drawn north, south, east or west of each square drawn at the previous
+ * recursion in order to draw squares at all the four cardinal points of each
+ * previous square.
+ * 
+ * @author Marc Karassev
+ * 
+ */
+public class F3kSolution extends AbstractSolution {
+
+    // Constructors
+
+    /**
+     * Constructs a new instance of F3kSolution with a recursion depth of 5 and
+     * an initial side of 200px.
+     */
+    public F3kSolution() {
+        this(4, 150);
+    }
+
+    /**
+     * Constructs a new instance of F3kSolution with the specified recursion
+     * depth and an initial side of 200px.
+     * 
+     * @param depth
+     *            the recursion depth of the recursive drawing.
+     */
+    public F3kSolution(int depth) {
+        this(depth, 150);
+    }
+
+    /**
+     * Constructs a new instance of F3kSolution with the specified recursion
+     * depth and initial square.
+     * 
+     * @param depth
+     *            the recursion depth of the recursive drawing.
+     * @param diameter
+     *            the diameter of the first circle.
+     */
+    public F3kSolution(int depth, int diameter) {
+        super(depth, diameter, SolutionType.F3kSolution);
+    }
+
+    // Methods
+
+    /**
+     * Produces a recursive drawing of squares.
+     * 
+     * @param drawingArea
+     *            the graphic object to draw into.
+     * @param args
+     *            [0] the x coordinate of the upper left corner of the square to
+     *            draw.
+     * @param args
+     *            [1] the y coordinate of the upper left corner of the square to
+     *            draw.
+     * @param args
+     *            [2] the width of the square to draw.
+     * @param args
+     *            [3] the recursions remaining to do.
+     * @param args
+     *            [4] integer corresponding to a cardinal position (North,
+     *            South, East, West or Center) of the circle to draw in relation
+     *            to the square drawn by the previous call of this function.
+     */
+    @Override
+    public void drawSolutionk(Graphics2D drawingArea, int... args) {
+        if (args.length != 5)
+            throw new IllegalArgumentException(
+                    "number of parameters different of 5");
+        if (args[3] != 0) {
+            drawingArea.drawRect(args[0], args[1], args[2], args[2]);
+            switch (Position.getByValue(args[4])) {
+            case CENTER:
+                drawFromCenter(drawingArea, args[0], args[1], args[2]);
+                break;
+            case NORTH:
+                drawFromNorth(drawingArea, args[0], args[1], args[2], args[3]);
+                break;
+
+            case SOUTH:
+                drawFromSouth(drawingArea, args[0], args[1], args[2], args[3]);
+                break;
+            case EAST:
+                drawFromEast(drawingArea, args[0], args[1], args[2], args[3]);
+                break;
+            case WEST:
+                drawFromWest(drawingArea, args[0], args[1], args[2], args[3]);
+                break;
+
+            default:
+                ;
+            }
+        }
+    }
+
+    /**
+     * Draws the squares of the first recursion.
+     * 
+     * @param drawingArea
+     *            the graphic object to draw into.
+     * @param x
+     *            the x coordinate of the upper left corner of the first square.
+     * @param y
+     *            the y coordinate of the upper left corner of the first square.
+     * @param length
+     *            the width of the first square.
+     */
+    private void drawFromCenter(Graphics2D drawingArea, int x, int y, int length) {
+        drawSolutionk(drawingArea, x, y - length / 2, length / 2, depth - 1,
+                Position.NORTH.getValue());
+        drawSolutionk(drawingArea, x + length / 2, y + length, length / 2,
+                depth - 1, Position.SOUTH.getValue());
+        drawSolutionk(drawingArea, x + length, y, length / 2, depth - 1,
+                Position.EAST.getValue());
+        drawSolutionk(drawingArea, x - length / 2, y + length / 2, length / 2,
+                depth - 1, Position.WEST.getValue());
+    }
+
+    /**
+     * Recursive calls of drawSolutionk for a square drawn North in relation to
+     * the square drawn by the previous recursion.
+     * 
+     * @param drawingArea
+     *            the graphic object to draw into.
+     * @param x
+     *            the x coordinate of the upper left corner of the square drawn
+     *            North.
+     * @param y
+     *            the y coordinate of the upper left corner of the square drawn
+     *            North.
+     * @param length
+     *            the diameter of the square drawn North.
+     * @param depth
+     *            the recursions remaining to do.
+     */
+    private void drawFromNorth(Graphics2D drawingArea, int x, int y, int length,
+            int depth) {
+        drawSolutionk(drawingArea, x, y - length / 2, length / 2, depth - 1,
+                Position.NORTH.getValue());
+        drawSolutionk(drawingArea, x + length, y, length / 2, depth - 1,
+                Position.EAST.getValue());
+        drawSolutionk(drawingArea, x - length / 2, y + length / 2, length / 2,
+                depth - 1, Position.WEST.getValue());
+    }
+
+    /**
+     * Recursive calls of drawSolutionk for a square drawn South in relation to
+     * the square drawn by the previous recursion.
+     * 
+     * @param drawingArea
+     *            the graphic object to draw into.
+     * @param x
+     *            the x coordinate of the upper left corner of the square drawn
+     *            South.
+     * @param y
+     *            the y coordinate of the upper left corner of the square drawn
+     *            South.
+     * @param length
+     *            the width of the square drawn South.
+     * @param depth
+     *            the recursions remaining to do.
+     */
+    private void drawFromSouth(Graphics2D drawingArea, int x, int y, int length,
+            int depth) {
+        drawSolutionk(drawingArea, x + length / 2, y + length, length / 2,
+                depth - 1, Position.SOUTH.getValue());
+        drawSolutionk(drawingArea, x + length, y, length / 2, depth - 1,
+                Position.EAST.getValue());
+        drawSolutionk(drawingArea, x - length / 2, y + length / 2, length / 2,
+                depth - 1, Position.WEST.getValue());
+    }
+
+    /**
+     * Recursive calls of drawSolutionk for a square drawn East in relation to
+     * the square drawn by the previous recursion.
+     * 
+     * @param drawingArea
+     *            the graphic object to draw into.
+     * @param x
+     *            the x coordinate of the upper left corner of the square drawn
+     *            East.
+     * @param y
+     *            the y coordinate of the upper left corner of the square drawn
+     *            East.
+     * @param length
+     *            the width of the square drawn East.
+     * @param depth
+     *            the recursions remaining to do.
+     */
+    private void drawFromEast(Graphics2D drawingArea, int x, int y, int length,
+            int depth) {
+        drawSolutionk(drawingArea, x, y - length / 2, length / 2, depth - 1,
+                Position.NORTH.getValue());
+        drawSolutionk(drawingArea, x + length / 2, y + length, length / 2,
+                depth - 1, Position.SOUTH.getValue());
+        drawSolutionk(drawingArea, x + length, y, length / 2, depth - 1,
+                Position.EAST.getValue());
+    }
+
+    /**
+     * Recursive calls of drawSolutionk for a square drawn West in relation to
+     * the square drawn by the previous recursion.
+     * 
+     * @param drawingArea
+     *            the graphic object to draw into.
+     * @param x
+     *            the x coordinate of the upper left corner of the square drawn
+     *            West.
+     * @param y
+     *            the y coordinate of the upper left corner of the square drawn
+     *            West.
+     * @param length
+     *            the width of the square drawn West.
+     * @param depth
+     *            the recursions remaining to do.
+     */
+    private void drawFromWest(Graphics2D drawingArea, int x, int y, int length,
+            int depth) {
+        drawSolutionk(drawingArea, x, y - length / 2, length / 2, depth - 1,
+                Position.NORTH.getValue());
+        drawSolutionk(drawingArea, x + length / 2, y + length, length / 2,
+                depth - 1, Position.SOUTH.getValue());
+        drawSolutionk(drawingArea, x - length / 2, y + length / 2, length / 2,
+                depth - 1, Position.WEST.getValue());
+    }
+}

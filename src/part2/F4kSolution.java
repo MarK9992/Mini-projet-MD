@@ -11,31 +11,31 @@ import java.awt.Graphics2D;
  * @author Marc Karassev
  * 
  */
-public class FkSolution extends AbstractSolution {
+public class F4kSolution extends AbstractSolution {
 
     // Constructors
 
     /**
-     * Constructs a new instance of FkSolution with a recursion depth of 5 and
-     * an initial diameter of 200px.
+     * Constructs a new instance of F4kSolution with a recursion depth of 5 and
+     * an initial diameter of 50px.
      */
-    public FkSolution() {
-        this(5, 200);
+    public F4kSolution() {
+        this(5, 50);
     }
 
     /**
-     * Constructs a new instance of FkSolution with the specified recursion
-     * depth and an initial diameter of 200px.
+     * Constructs a new instance of F4kSolution with the specified recursion
+     * depth and an initial diameter of 50px.
      * 
      * @param depth
      *            the recursion depth of the recursive drawing
      */
-    public FkSolution(int depth) {
-        this(depth, 200);
+    public F4kSolution(int depth) {
+        this(depth, 50);
     }
 
     /**
-     * Constructs a new instance of FkSolution with the specified recursion
+     * Constructs a new instance of F4kSolution with the specified recursion
      * depth and initial diameter.
      * 
      * @param depth
@@ -43,14 +43,14 @@ public class FkSolution extends AbstractSolution {
      * @param diameter
      *            the diameter of the first circle
      */
-    public FkSolution(int depth, int diameter) {
-        super(depth, diameter, SolutionType.FkSolution);
+    public F4kSolution(int depth, int diameter) {
+        super(depth, diameter, SolutionType.F4kSolution);
     }
 
     // Methods
 
     /**
-     * Produces a recursive drawing of circles.
+     * Produces a recursive drawing.
      * 
      * @param drawingArea
      *            the graphic object to draw into
@@ -64,18 +64,23 @@ public class FkSolution extends AbstractSolution {
      *            [2] the width of the circle to draw
      * @param args
      *            [3] the recursions remaining to do.
+     * @param args
+     *            [4] number of lines to draw multiplier
      */
     @Override
     public void drawSolutionk(Graphics2D drawingArea, int... args) {
-        if (args.length != 4)
+        if (args.length != 5)
             throw new IllegalArgumentException(
-                    "number of parameters different of 4");
+                    "number of parameters different of 5");
         if (args[3] != 0) {
-            drawingArea.fillOval(args[0], args[1], args[2], args[2]);
-            drawSolutionk(drawingArea, args[0] + args[2],
-                    args[1] + args[2] / 4, args[2] / 2, args[3] - 1);
-            drawSolutionk(drawingArea, args[0] + args[2] / 4,
-                    args[1] + args[2], args[2] / 2, args[3] - 1);
+            drawingArea.drawOval(args[0], args[1], args[2], args[2]);
+            for (int i = 0; i < 4 * args[4]; i++) {
+                drawingArea.drawLine(-args[2] / 2, 0, -5 * args[2] / 2, 0);
+                drawingArea.rotate(Math.PI / 2 / args[4]);
+            }
+            drawSolutionk(drawingArea, args[0] - initialLength / 10, args[1]
+                    - initialLength / 10, args[2] + initialLength / 5,
+                    args[3] - 1, args[4] * 2);
         }
     }
 }

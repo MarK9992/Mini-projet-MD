@@ -1,13 +1,13 @@
 package part2;
 
 /**
- * Enumeration of SolutionTypes : FkSolution, F2kSolution
+ * Enumeration of SolutionTypes : FkSolution, F2kSolution, F3kSolution
  * 
  * @author Marc Karassev
  * 
  */
 public enum SolutionType {
-    FkSolution("Fk"), F2kSolution("F2k");
+    FkSolution("Fk"), F2kSolution("F2k"), F3kSolution("F3k"), F4kSolution("F4k");
 
     private String name;
 

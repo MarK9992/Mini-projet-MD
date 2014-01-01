@@ -20,7 +20,7 @@ public class Test {
     private static AbstractSolution s;
     private static Scanner sc = new Scanner(System.in);
     private static int solution, depth;
-    private static final int MAXDEPTH = 15, MINDEPTH = 0, MAXSOLUTION = 2,
+    private static final int MAXDEPTH = 15, MINDEPTH = 0, MAXSOLUTION = 4,
             MINSOLUTION = 1;
 
     /**
@@ -28,8 +28,10 @@ public class Test {
      */
     public static void selectSolution() {
         do {
-            System.out
-                    .printf("Please choose the solution type:\nFkSolution -> 1\nF2kSolution -> 2\n");
+            System.out.println("Please choose the solution type:");
+            for(int i = MINSOLUTION; i <= MAXSOLUTION; i++) {
+                System.out.println("F" + i + "kSolution -> " + i);
+            }
             solution = sc.nextInt();
         } while (solution > MAXSOLUTION || solution < MINSOLUTION);
     }
@@ -39,7 +41,8 @@ public class Test {
      */
     public static void selectDepth() {
         do {
-            System.out.printf("Please choose the recursion depth (max 15): ");
+            System.out.printf("Please choose the recursion depth (max "
+                    + MAXDEPTH + "): ");
             depth = sc.nextInt();
         } while (depth < MINDEPTH || depth > MAXDEPTH);
     }
@@ -54,8 +57,13 @@ public class Test {
                 s = new FkSolution(depth);
                 break;
             case 2:
-                s = new F2kSolution(depth); //TODO code duplication ?
+                s = new F2kSolution(depth);
                 break;
+            case 3:
+                s = new F3kSolution(depth);
+                break;
+            case 4:
+                s = new F4kSolution(depth);
             }
         } catch (NullPointerException e) {
             System.err

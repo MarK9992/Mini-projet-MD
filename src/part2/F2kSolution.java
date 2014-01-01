@@ -1,6 +1,6 @@
 package part2;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * Window which draws a recursive drawing of circles. The first circle is drawn
@@ -71,10 +71,12 @@ public class F2kSolution extends AbstractSolution {
      *            to the circle drawn by the previous call of this function.
      */
     @Override
-    public void drawSolutionk(Graphics drawingArea, int... args) {
-        // TODO illegalArgs
+    public void drawSolutionk(Graphics2D drawingArea, int... args) {
+        if (args.length != 5)
+            throw new IllegalArgumentException(
+                    "number of parameters different of 5");
         if (args[3] != 0) {
-            drawingArea.drawOval(args[0], args[1], args[2], args[2]);
+            drawingArea.fillOval(args[0], args[1], args[2], args[2]);
             switch (Position.getByValue(args[4])) {
             case CENTER:
                 drawFromCenter(drawingArea, args[0], args[1], args[2]);
@@ -109,9 +111,9 @@ public class F2kSolution extends AbstractSolution {
      * @param y
      *            the y coordinate of the upper left corner of the first circle.
      * @param length
-     *            the width of the first circle.
+     *            the diameter of the first circle.
      */
-    private void drawFromCenter(Graphics drawingArea, int x, int y, int length) {
+    private void drawFromCenter(Graphics2D drawingArea, int x, int y, int length) {
         drawSolutionk(drawingArea, x + length / 4, y - length / 2, length / 2,
                 depth - 1, Position.NORTH.getValue());
         drawSolutionk(drawingArea, x + length / 4, y + length, length / 2,
@@ -129,15 +131,17 @@ public class F2kSolution extends AbstractSolution {
      * @param drawingArea
      *            the graphic object to draw into.
      * @param x
-     *            the x coordinate of the upper left corner of the first circle.
+     *            the x coordinate of the upper left corner of the circle drawn
+     *            North.
      * @param y
-     *            the y coordinate of the upper left corner of the first circle.
+     *            the y coordinate of the upper left corner of the circle drawn
+     *            North.
      * @param length
-     *            the width of the first circle.
+     *            the diameter of the circle drawn North.
      * @param depth
      *            the recursions remaining to do.
      */
-    private void drawFromNorth(Graphics drawingArea, int x, int y, int length,
+    private void drawFromNorth(Graphics2D drawingArea, int x, int y, int length,
             int depth) {
         drawSolutionk(drawingArea, x + length / 4, y - length / 2, length / 2,
                 depth - 1, Position.NORTH.getValue());
@@ -154,15 +158,17 @@ public class F2kSolution extends AbstractSolution {
      * @param drawingArea
      *            the graphic object to draw into.
      * @param x
-     *            the x coordinate of the upper left corner of the first circle.
+     *            the x coordinate of the upper left corner of the circle drawn
+     *            South.
      * @param y
-     *            the y coordinate of the upper left corner of the first circle.
+     *            the y coordinate of the upper left corner of the circle drawn
+     *            South.
      * @param length
-     *            the width of the first circle.
+     *            the width of the circle drawn South.
      * @param depth
      *            the recursions remaining to do.
      */
-    private void drawFromSouth(Graphics drawingArea, int x, int y, int length,
+    private void drawFromSouth(Graphics2D drawingArea, int x, int y, int length,
             int depth) {
         drawSolutionk(drawingArea, x + length / 4, y + length, length / 2,
                 depth - 1, Position.SOUTH.getValue());
@@ -172,7 +178,6 @@ public class F2kSolution extends AbstractSolution {
                 depth - 1, Position.WEST.getValue());
     }
 
-
     /**
      * Recursive calls of drawSolutionk for a circle drawn East in relation to
      * the circle drawn by the previous recursion.
@@ -180,15 +185,17 @@ public class F2kSolution extends AbstractSolution {
      * @param drawingArea
      *            the graphic object to draw into.
      * @param x
-     *            the x coordinate of the upper left corner of the first circle.
+     *            the x coordinate of the upper left corner of the circle drawn
+     *            East.
      * @param y
-     *            the y coordinate of the upper left corner of the first circle.
+     *            the y coordinate of the upper left corner of the circle drawn
+     *            East.
      * @param length
-     *            the width of the first circle.
+     *            the width of the circle drawn East.
      * @param depth
      *            the recursions remaining to do.
      */
-    private void drawFromEast(Graphics drawingArea, int x, int y, int length,
+    private void drawFromEast(Graphics2D drawingArea, int x, int y, int length,
             int depth) {
         drawSolutionk(drawingArea, x + length / 4, y - length / 2, length / 2,
                 depth - 1, Position.NORTH.getValue());
@@ -205,15 +212,17 @@ public class F2kSolution extends AbstractSolution {
      * @param drawingArea
      *            the graphic object to draw into.
      * @param x
-     *            the x coordinate of the upper left corner of the first circle.
+     *            the x coordinate of the upper left corner of the circle drawn
+     *            West.
      * @param y
-     *            the y coordinate of the upper left corner of the first circle.
+     *            the y coordinate of the upper left corner of the circle drawn
+     *            West.
      * @param length
-     *            the width of the first circle.
+     *            the width of the circle drawn West.
      * @param depth
      *            the recursions remaining to do.
      */
-    private void drawFromWest(Graphics drawingArea, int x, int y, int length,
+    private void drawFromWest(Graphics2D drawingArea, int x, int y, int length,
             int depth) {
         drawSolutionk(drawingArea, x + length / 4, y - length / 2, length / 2,
                 depth - 1, Position.NORTH.getValue());
