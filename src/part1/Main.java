@@ -2,8 +2,17 @@ package part1;
 
 import java.util.Scanner;
 
+/**
+ * This class makes the Menu and launch new HanoiGames.
+ * 
+ * @author tom
+ *
+ */
 public class Main {
 	
+	/**
+	 * COnctructor which create and solve a new game until the user wants to stop.
+	 */
 	public Main(){
 		int nbOfDisk;
 		do {

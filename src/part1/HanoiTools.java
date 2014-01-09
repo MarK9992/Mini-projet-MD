@@ -1,8 +1,19 @@
 package part1;
 
-
+/**
+ * This Class contains several tools that can be used with HanoiGame.
+ * 
+ * @author Tom Veniat
+ *
+ */
 public abstract class HanoiTools {
 
+	/**
+	 * Recursive function that repeat times(the argument) times the String s .
+	 * @param s
+	 * @param times
+	 * @return
+	 */
 	public static String repeat(String s, int times) {
 		StringBuilder stringBuilder = new StringBuilder(s.length() * times);
 		if (times != 0)
@@ -19,6 +30,13 @@ public abstract class HanoiTools {
 			repeat(stringBuilder.append(s), s + s, times / 2);
 	}
 
+	/**
+	 * Method that move a Disk From the Pile origin to the Pile destination if it's possible.
+	 * It also increment the number of movements of the Disk and of the HanoiGame
+	 * @param game
+	 * @param origin
+	 * @param destination
+	 */
 	public static void moveDisk(HanoiGame game, int origin, int destination) {
 		try {
 			Disk temp = game.getCurrentSituation().get(origin).pop();
@@ -30,6 +48,12 @@ public abstract class HanoiTools {
 		}
 	}
 
+	/**
+	 * method which makes the only possible move between pileA and pileB, and does nothing if both Pile are empty
+	 * @param game
+	 * @param pileA
+	 * @param pileB
+	 */
 	public static void makeAMove(HanoiGame game, int pileA, int pileB) {
 		int sizeTopPileA = game.getCurrentSituation().get(pileA).seeLast()
 				.getSize();
@@ -45,6 +69,11 @@ public abstract class HanoiTools {
 		}
 	}
 
+	/**
+	 * method which print the current state of the HanoiGame game.
+	 * 
+	 * @param game
+	 */
 	public static void printGame(HanoiGame game) {
 		for (int i = game.getNumberOfDisk(); i > 0; i--) {
 			System.out.println(getGameLine(game, i - 1));
@@ -64,6 +93,12 @@ public abstract class HanoiTools {
 		}
 	}
 
+	/**
+	 * Prints the line n°i of the HanoiGame game.
+	 * @param game
+	 * @param i
+	 * @return
+	 */
 	private static String getGameLine(HanoiGame game, int i) {
 		Disk currentDisk;
 		StringBuilder stringBuilder = new StringBuilder();
@@ -80,15 +115,40 @@ public abstract class HanoiTools {
 		return stringBuilder.toString();
 	}
 
+	/**
+	 * Optimal solution of an HanoiGame.
+	 * Use an auxiliary recursive function.
+	 * 
+	 * @param game
+	 */
 	public static void solveHanoiRecOpt(HanoiGame game) {
 		HanoiTools.solveHanoiRecAux(game, game.getNumberOfDisk(), 0, 1, 2);
 		System.out.println(minNbMoves(game.getNumberOfDisk()));
 	}
+	
+	/**
+	 * Optimal solution of an HanoiGame if we add the Circular rule.
+	 * Use two auxiliary recursive function.
+	 * 
+	 * @param game
+	 */
 	public static void solveHanoiRecCir(HanoiGame game) {
 		HanoiTools.solveHanoiRecAuxCir(game, game.getNumberOfDisk(), 0, 1, 2);
 		System.out.println(minNbMovesCir(game.getNumberOfDisk()));
 	}
 
+	
+
+	/**
+	 * Solve the HanoiTower game with recursive calls,
+	 * It is the optimal Solution.
+	 * 
+	 * @param g
+	 * @param numberOfDisk
+	 * @param i
+	 * @param j
+	 * @param k
+	 */
 	public static void solveHanoiRecAux(HanoiGame g, int numberOfDisk, int i,
 			int j, int k) {
 		if (numberOfDisk < 1) {
@@ -101,6 +161,16 @@ public abstract class HanoiTools {
 		}
 	}
 
+	/**
+	 * Solve an HanoiGame with the circular rule.
+	 * 
+	 * 
+	 * @param g
+	 * @param numberOfDisk
+	 * @param i
+	 * @param j
+	 * @param k
+	 */
 	public static void solveHanoiRecAuxCir(HanoiGame g, int numberOfDisk,
 			int i, int j, int k) {
 		if (numberOfDisk < 1) {
@@ -132,7 +202,12 @@ public abstract class HanoiTools {
 			solveHanoiRecAuxCir(g, numberOfDisk - 1, j, i, k);
 		}
 	}
-
+	
+	/**
+	 * Solve the HanoiTower game with an iterative method,
+	 * It is the optimal Solution.
+	 * @param g
+	 */
 	public static void solveHanoiIt(HanoiGame g) {
 		int step = 0;
 		int pas = ((g.getNumberOfDisk() % 2) == 0) ? 1 : -1;
@@ -155,6 +230,12 @@ public abstract class HanoiTools {
 		return (mod3 < 0) ? mod3 + 3 : mod3;
 	}
 
+	/**
+	 * function that return the minimal number of moves needed to solve an HanoiGame.
+	 * 
+	 * @param numberOfDisk
+	 * @return
+	 */
 	public static int minNbMoves(int numberOfDisk) {
 		if (numberOfDisk < 1)
 			return 0;
@@ -162,6 +243,12 @@ public abstract class HanoiTools {
 			return 1 + 2 * minNbMoves(numberOfDisk - 1);
 	}
 
+	/**
+	 * function that return the minimal number of moves needed to solve an HanoiGame with the circular rule.
+	 * 
+	 * @param numberOfDisk
+	 * @return
+	 */
 	public static int minNbMovesCir(int numberOfDisk) {
 		if (numberOfDisk < 1)
 			return 0;
