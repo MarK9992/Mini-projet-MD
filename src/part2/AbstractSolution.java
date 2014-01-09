@@ -5,10 +5,6 @@ import java.awt.event.WindowAdapter; // to close
 import java.awt.event.WindowEvent; // to close
 
 public abstract class AbstractSolution extends Frame {
-    // TODO deal with the serializing problems
-    // TODO final parameters of functions
-    // TODO private fields
-    // TODO java documentation comments
 
     // Fields
 
@@ -48,7 +44,6 @@ public abstract class AbstractSolution extends Frame {
         }
     }
 
-    // TODO repaint ? listener on resize
     public void paint(Graphics g) {
         int frameHeight = getSize().height;
         int frameWidth = getSize().width;

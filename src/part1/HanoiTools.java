@@ -1,4 +1,4 @@
-package hanoi;
+package part1;
 
 import java.util.ArrayList;
 

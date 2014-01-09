@@ -1,4 +1,4 @@
-package hanoi;
+package part1;
 
 public class Disk {
 	private int size;
