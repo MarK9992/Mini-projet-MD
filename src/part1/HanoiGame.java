@@ -25,6 +25,8 @@ public class HanoiGame {
 			this.play(version);
 	}
 	/**
+	 * This method launch the game with the correct algorithm.
+	 * It calls the method that match with version
 	 * 
 	 * @param version
 	 */
@@ -45,7 +47,10 @@ public class HanoiGame {
 	}
 
 	
-
+	/**
+	 * initialize the game with 3 Pile and all the Disks on the first Pile.
+	 * @param nbOfDisk
+	 */
 	private void initialize(int nbOfDisk) {
 		this.setNumberOfDisk(nbOfDisk);
 		this.setNbMoves(0);

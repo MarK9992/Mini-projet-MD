@@ -1,6 +1,5 @@
 package part1;
 
-import java.util.ArrayList;
 
 public abstract class HanoiTools {
 
