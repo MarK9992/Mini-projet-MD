@@ -1,8 +1,16 @@
-package hanoi;
+package part1;
 
+
+/**
+ * 
+ * This Class represents an element on a Tower of Hanoi.
+ * 
+ * @author Tom Veniat
+ *
+ */
 public class Disk {
-	private int size;
-	private int nbMoves;
+	private int size; // the size of the disk
+	private int nbMoves; // the number of movements this disk already done in the current game.
 	
 	public Disk(int i) {
 		this.size=i;

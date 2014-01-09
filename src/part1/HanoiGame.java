@@ -1,20 +1,33 @@
-package hanoi;
+package part1;
 
 import java.util.*;
-
+/**
+ * 
+ * Class which is the representation of an Hanoi game, with 3 stacks (Pile) of Disks
+ * 
+ * @author Tom Veniat
+ * 
+ */
 public class HanoiGame {
-	private int numberOfDisk;
-	private ArrayList<Pile> currentSituation;
-	private int nbMoves;
+	private int numberOfDisk; // the total number of Disk of this game
+	private ArrayList<Pile> currentSituation; //the current situation of this game
+	private int nbMoves;// the number of moves already done in this game
 
+	
+	/**
+	 * Initialize a new HanoiGame with nbOfDisk on the first Pile, and the version of solution which will be used
+	 * 
+	 * @param nbOfDisk
+	 * @param version
+	 */
 	public HanoiGame(int nbOfDisk, int version) {
-		
 			this.initialize(nbOfDisk);
 			this.play(version);
-		
-		
 	}
-
+	/**
+	 * 
+	 * @param version
+	 */
 	private void play(int version) {
 		HanoiTools.printGame(this);
 		switch(version){

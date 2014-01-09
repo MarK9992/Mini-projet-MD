@@ -1,4 +1,4 @@
-package hanoi;
+package part1;
 
 import java.util.ArrayList;
 
@@ -25,6 +25,7 @@ public abstract class HanoiTools {
 			Disk temp = game.getCurrentSituation().get(origin).pop();
 			temp.incNbMoves();
 			game.getCurrentSituation().get(destination).push(temp);
+			game.incMoves();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -96,7 +97,6 @@ public abstract class HanoiTools {
 		} else {
 			solveHanoiRecAux(g, numberOfDisk - 1, i, k, j);
 			moveDisk(g, i, k);
-			g.incMoves();
 			printGame(g);
 			solveHanoiRecAux(g, numberOfDisk - 1, j, i, k);
 		}
@@ -107,16 +107,14 @@ public abstract class HanoiTools {
 		if (numberOfDisk < 1) {
 			System.out.println(g.getNbMoves());
 		} else {
-
 			solveHanoiRecAuxCir(g, numberOfDisk - 1, i, j, k);
+			
 			moveDisk(g, i, j);
-			g.incMoves();
 			printGame(g);
 
 			solveHanoiRecAux2Cir(g, numberOfDisk - 1, k, j, i);
 
 			moveDisk(g, j, k);
-			g.incMoves();
 			printGame(g);
 
 			solveHanoiRecAuxCir(g, numberOfDisk - 1, i, j, k);
@@ -131,7 +129,6 @@ public abstract class HanoiTools {
 		} else {
 			solveHanoiRecAuxCir(g, numberOfDisk - 1, i, k, j);
 			moveDisk(g, i, k);
-			g.incMoves();
 			printGame(g);
 			solveHanoiRecAuxCir(g, numberOfDisk - 1, j, i, k);
 		}
@@ -149,9 +146,8 @@ public abstract class HanoiTools {
 			step = myMod3(step + pas);
 			moveDisk(g, step, myMod3(step + pas));
 			printGame(g);
-			System.out.println(i);
-
 		}
+		System.out.println(g.getNbMoves());
 		System.out.println(minNbMoves);
 	}
 
@@ -170,15 +166,10 @@ public abstract class HanoiTools {
 	public static int minNbMovesCir(int numberOfDisk) {
 		if (numberOfDisk < 1)
 			return 0;
+		else if (numberOfDisk ==1)
+			return 2;
 		else
-			return 2 + 2 * minNbMovesCir(numberOfDisk - 1)
-					+ minNbMovesCir2(numberOfDisk - 1);
+			return 3 + 2 * minNbMovesCir(numberOfDisk - 1)+2*minNbMovesCir(numberOfDisk-2);
 	}
 
-	public static int minNbMovesCir2(int numberOfDisk) {
-		if (numberOfDisk < 1)
-			return 0;
-		else
-			return 1 + 2 * minNbMovesCir(numberOfDisk - 1);
-	}
 }
